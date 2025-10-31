@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {LoginService} from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +12,27 @@ import {FormsModule} from '@angular/forms';
 })
 export class LoginComponent {
   phoneNumber: string = '';
+  nome: string = '';
+  private loginService = inject(LoginService);
 
   onLogin() {
-    console.log('Telefone:', this.phoneNumber);
-    // Aqui você adiciona a lógica de login
+    try {
+
+      this.loginService.login(this.phoneNumber, this.nome).subscribe({
+        next: (response) => {
+          console.log('Login bem-sucedido:', response);
+        },
+        error: (err) => {
+          console.error('Erro ao fazer login:', err);
+        },
+        complete: () => {
+          console.log('Requisição de login completa.');
+        }
+      });
+
+    } catch (error) {
+      console.error('Erro inesperado no componente de login:', error);
+    }
   }
 
   formatPhone(event: any) {
