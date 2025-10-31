@@ -1,0 +1,77 @@
+header {
+  background-color: #78c871;
+  h1 {
+    font-weight: 600;
+  }
+}
+
+.calendar {
+  color: #78c871;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 12px 12px 0 0 !important;
+    padding: 1rem 1.25rem;
+
+    h5 {
+      color: #495057;
+      font-weight: 600;
+    }
+  }
+
+  .card-body {
+    //padding: 1.5rem;
+  }
+
+  .card-title {
+    font-weight: 700;
+  }
+
+  .card-subtitle {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Ajustes para os gráficos ngx-charts
+::ng-deep {
+  .ngx-charts {
+    text {
+      fill: #495057 !important;
+      font-size: 12px;
+    }
+  }
+
+  .tick text {
+    fill: #6c757d !important;
+  }
+
+  .label {
+    font-weight: 500;
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .card-body {
+    padding: 1rem;
+
+    ngx-charts-bar-vertical,
+    ngx-charts-pie-chart,
+    ngx-charts-line-chart,
+    ngx-charts-advanced-pie-chart {
+      height: 300px !important;
+    }
+  }
+}

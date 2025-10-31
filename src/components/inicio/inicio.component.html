@@ -1,0 +1,141 @@
+<header class="header text-white py-3 shadow-sm">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1 class="h3 mb-0">MeuSaldo
+          <i class="fa fa-heart" aria-hidden="true"></i>
+        </h1>
+      </div>
+      <div class="col-auto">
+        <span class="badge bg-light calendar fs-6">Outubro 2025</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Dashboard -->
+<main class="container-fluid py-4">
+
+  <!-- Cards de Resumo -->
+  <div class="row mb-4">
+    <div class="col-12 col-md-3 mb-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Total Geral</h6>
+          <h3 class="card-title text-primary mb-0">R$ {{ totalGeral | number:'1.2-2' }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-3 mb-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">🏠 Casa</h6>
+          <h3 class="card-title text-success mb-0">R$ {{ totalCasa | number:'1.2-2' }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-3 mb-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">🎉 Lazer</h6>
+          <h3 class="card-title text-warning mb-0">R$ {{ totalLazer | number:'1.2-2' }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-3 mb-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">🚗 Transporte</h6>
+          <h3 class="card-title text-info mb-0">R$ {{ totalTransporte | number:'1.2-2' }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráficos -->
+  <div class="row">
+
+    <!-- Despesas de Casa -->
+    <div class="col-12 col-lg-6 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">🏠 Despesas de Casa</h5>
+        </div>
+        <div class="card-body">
+          <ngx-charts-bar-vertical
+            [results]="despesasCasa"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [scheme]="colorScheme"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+    </div>
+
+    <!-- Despesas de Lazer -->
+    <div class="col-12 col-lg-6 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">🎉 Despesas de Lazer</h5>
+        </div>
+        <div class="card-body">
+          <ngx-charts-pie-chart
+            [results]="despesasLazer"
+            [legend]="showLegend"
+            [scheme]="colorScheme"
+            (select)="onSelect($event)">
+          </ngx-charts-pie-chart>
+        </div>
+      </div>
+    </div>
+
+    <!-- Despesas de Transporte -->
+    <div class="col-12 col-lg-6 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">🚗 Despesas de Transporte</h5>
+        </div>
+        <div class="card-body">
+          <ngx-charts-advanced-pie-chart
+            [results]="despesasTransporte"
+            [scheme]="colorScheme"
+            (select)="onSelect($event)">
+          </ngx-charts-advanced-pie-chart>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evolução Mensal -->
+    <div class="col-12 col-lg-6 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">📈 Evolução Mensal</h5>
+        </div>
+        <div class="card-body">
+          <ngx-charts-line-chart
+            [results]="evolucaoMensal"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="'Mês'"
+            [yAxisLabel]="yAxisLabel"
+            [scheme]="colorScheme"
+            (select)="onSelect($event)">
+          </ngx-charts-line-chart>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
