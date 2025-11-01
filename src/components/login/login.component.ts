@@ -1,6 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {LoginService} from '../../services/login.service';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -8,31 +10,37 @@ import {LoginService} from '../../services/login.service';
     FormsModule
   ],
   templateUrl: './login.component.html',
+  standalone: true,
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   phoneNumber: string = '';
   nome: string = '';
+  private router = inject(Router);
   private loginService = inject(LoginService);
+  private toastr = inject(ToastrService);
 
   onLogin() {
-    try {
+    this.loginService.login(this.phoneNumber, this.nome).subscribe({
+      next: (response) => {
+        const msg = (response as any)?.message || 'Login realizado com sucesso!';
+        this.toastr.success(msg, 'Sucesso!');
 
-      this.loginService.login(this.phoneNumber, this.nome).subscribe({
-        next: (response) => {
-          console.log('Login bem-sucedido:', response);
+        window.open('https://wa.me/message/OT2QP734WEYJM1', '_blank', 'noopener,noreferrer');
         },
-        error: (err) => {
-          console.error('Erro ao fazer login:', err);
-        },
-        complete: () => {
-          console.log('Requisição de login completa.');
+      error: (err) => {
+        console.error('Erro ao fazer login:', err);
+
+        let msg = 'Erro inesperado. Tente novamente.';
+        if (err.status === 500) {
+          msg = 'Erro interno do servidor. Tente mais tarde.';
+        } else if (err.error && err.error.message) {
+          msg = err.error.message;
         }
-      });
 
-    } catch (error) {
-      console.error('Erro inesperado no componente de login:', error);
-    }
+        this.toastr.error(msg, 'Erro de Login');
+      }
+    });
   }
 
   formatPhone(event: any) {

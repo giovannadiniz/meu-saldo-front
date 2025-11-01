@@ -9,7 +9,7 @@ export class LoginService {
 
   private http = inject(HttpClient);
 
-  private apiUrl: string = 'https://api.example.com/login';
+  private apiUrl: string = 'https://ac9be7dd8b5e.ngrok-free.app/usuarios';
 
   constructor() { }
 
@@ -20,8 +20,8 @@ export class LoginService {
         nome: nome
       };
 
-      console.log('Enviando para API externa /users/create:', payload);
+      console.log('Enviando para API externa /usuarios:', payload);
 
-      return this.http.post<UserModel>(`${this.apiUrl}/users/create`, payload);
-    }
+      return this.http.post<UserModel>(`${this.apiUrl}`, payload);
+  }
 }
